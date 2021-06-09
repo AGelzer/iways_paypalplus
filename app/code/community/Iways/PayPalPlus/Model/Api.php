@@ -289,9 +289,10 @@ class Iways_PayPalPlus_Model_Api
      *
      * @param type $paymentId
      * @param type $amount
+     * @param null|int|Mage_Core_Model_Store $store
      * @return type
      */
-    public function refundPayment($paymentId, $amount)
+    public function refundPayment($paymentId, $amount, $store = null)
     {
         $transactions = $this->getPayment($paymentId)->getTransactions();
         $relatedResources = $transactions[0]->getRelatedResources();
@@ -300,7 +301,7 @@ class Iways_PayPalPlus_Model_Api
 
         $ppAmount = new Amount();
         $ppAmount
-            ->setCurrency(Mage::app()->getStore()->getCurrentCurrencyCode())
+            ->setCurrency(Mage::app()->getStore($store)->getCurrentCurrencyCode())
             ->setTotal($amount);
         $refund->setAmount($ppAmount);
 

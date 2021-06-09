@@ -167,7 +167,8 @@ class Iways_PayPalPlus_Model_Payment extends Mage_Payment_Model_Method_Abstract
     {
         $ppRefund = Mage::getModel('iways_paypalplus/api')->refundPayment(
             $this->_getParentTransactionId($payment),
-            $amount
+            $amount,
+            $this->getStore()
         );
         $payment->setTransactionId($ppRefund->getId())->setTransactionClosed(1);
         return $this;
